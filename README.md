@@ -61,7 +61,7 @@ Phase	Tasks
 Ideation	Researched SDG 6 and water safety challenges
 Development	Cleaned dataset, built model, automated pipeline
 Testing	Evaluated with accuracy and confusion matrix
-Deployment	Created Streamlit web interface
+Deployment	Created Streamlit web interface - https://cdvraj8zpffvcnyxuzreaz.streamlit.app/
 Monitoring	Placeholder for user feedback module
 
 
