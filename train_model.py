@@ -1,37 +1,24 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 import pickle
+from sklearn.ensemble import RandomForestClassifier
+import numpy as np
 
-# Sample dataset with 9 features and target 'Potability' (1 = safe, 0 = unsafe)
-data = {
-    "ph": [7.0, 3.5, 8.1, 6.8, 5.5],
-    "Hardness": [200, 300, 150, 180, 400],
-    "Solids": [10000, 15000, 12000, 18000, 20000],
-    "Chloramines": [6.5, 4.5, 9.0, 7.2, 3.0],
-    "Sulfate": [250, 300, 200, 150, 100],
-    "Conductivity": [400, 500, 450, 480, 550],
-    "Organic_carbon": [10, 12, 15, 9, 20],
-    "Trihalomethanes": [75, 90, 60, 85, 100],
-    "Turbidity": [2.0, 4.0, 3.5, 1.5, 5.0],
-    "Potability": [1, 0, 1, 1, 0]
-}
+# === Step 1: Create training data ===
+# 0 = unsafe, 1 = safe
+X = [
+    [7.0, 120.0, 500.0, 3.0, 250.0, 400.0, 10.0, 60.0, 3.0],  # safe
+    [6.0, 100.0, 800.0, 5.0, 300.0, 450.0, 15.0, 90.0, 4.0],  # unsafe
+    [7.2, 130.0, 400.0, 2.5, 230.0, 390.0, 8.0, 55.0, 2.5],   # safe
+    [5.8, 80.0, 1500.0, 6.0, 100.0, 700.0, 20.0, 110.0, 5.0], # unsafe
+    [7.1, 110.0, 300.0, 3.2, 240.0, 410.0, 9.0, 65.0, 3.2],   # safe
+    [6.2, 90.0, 1000.0, 4.0, 150.0, 600.0, 18.0, 100.0, 4.5]  # unsafe
+]
+y = [1, 0, 1, 0, 1, 0]
 
-df = pd.DataFrame(data)
+# === Step 2: Train the model ===
+model = RandomForestClassifier()
+model.fit(X, y)
 
-# Features and target
-X = df.drop("Potability", axis=1)
-y = df["Potability"]
-
-# Split the data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Train the model
-model = LogisticRegression()
-model.fit(X_train, y_train)
-
-# Save the model to a file
-with open("model.pkl", "wb") as file:
-    pickle.dump(model, file)
-
-print("✅ model.pkl has been created.")
+# === Step 3: Save the model ===
+model_bytes = pickle.dumps(model)
+print("Model exported successfully. Bytes:")
+print(model_bytes[:100])  # Preview first 100 bytes
