@@ -5,7 +5,7 @@ import numpy as np
 import joblib
 
 # Load the trained model
-model = joblib.load('water_model.pkl')
+model = joblib.load('model.pkl')
 
 st.title("💧 Water Potability Prediction App")
 
